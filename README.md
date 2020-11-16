@@ -1,5 +1,5 @@
 # Introduction to Deep Learning #2
-** Face Detection **
+**Face Detection**
 
 Use case: face detection on heritage images 
 
