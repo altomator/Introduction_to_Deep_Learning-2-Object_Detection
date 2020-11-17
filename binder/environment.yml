@@ -5,8 +5,7 @@ dependencies:
   - python=3.8
   - requests
   - pycurl
-  - Pillow
-  - PIL
+  - pillow
   - matplotlib
   - numpy
   - cv2
