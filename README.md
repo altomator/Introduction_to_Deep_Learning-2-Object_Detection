@@ -6,6 +6,8 @@ Use case: face detection on heritage images
 # Goals 
 Annotation of visages on heritage material for information retrieval, quantitative analysis, etc.
 
+![Face detection](https://octodex.github.com/images/yaktocat.png)
+
 ## Hands-on session 
 This Jupyter notebook gives access to Gallica images thanks to the IIIF Image API and performs face detection based on a ResNet SSD network. 
 The [OpenCV/dnn](https://www.pyimagesearch.com/2018/02/26/face-detection-with-opencv-and-deep-learning/) module is used to do so.
