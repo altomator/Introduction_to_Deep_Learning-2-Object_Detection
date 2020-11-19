@@ -10,8 +10,8 @@ import cv2
 #docID = '12148/bpt6k46000341' # quotidien
 #docID = '12148/btv1b6931954n' # photo
 #docID = '12148/btv1b10336854c' # album
-docID = '12148/btv1b10544068q' # estampe
-
+#docID = '12148/btv1b10544068q' # estampe
+docID = '12148/bpt6k65414058' # Vogue magazine
 
 
 print("Python version")
@@ -29,10 +29,14 @@ r = requests.get(req_url)
 r.raise_for_status()
 json_4img = r.json()
 print (json_4img.keys())
+
 # 2. Now we load the images files thanks to the IIIF Image protocol
 from iiif_api import IIIF #  get the image files with the IIIF Image API (PyGallica package again)
 # IIIF export factor (%)
 docExportFactor = 15
+# get docMax images
+docMax = 10
+
 # get the sequence of images metadata. It's a list
 sequences = json_4img.get('sequences')
 # get the canvases, first element of the list. Its a dict
@@ -54,6 +58,8 @@ for c in canvases.get('canvases'):
     urlIIIF = "".join([docID,'/f',str(nImages)]), 'full', "".join(['pct:',str(docExportFactor)]), '0', 'native', 'jpg'
     urlsIIIF.append(urlIIIF)
     #IIIF.iiif()
+    if nImages >= docMax:
+        break
 
 print ("-------")
 print ("images:", nImages)
@@ -111,20 +117,40 @@ images = [path_to_pil(e) for e in entries]
 #for im in images:
 #   display(im)
 
+
 #########################
 # 3. Now we process the images for face detection
 # using the dnn module : https://docs.opencv.org/master/d2/d58/tutorial_table_of_content_dnn.html
 import numpy as np
 from imutils import paths
 
-min_confidence = 0.25
+# minimum confidence score to keep the detection
+minConfidence = 0.1
+# detecting  homothetic contours
+homotheticThreshold = 1.3 # 30%  tolerance
+areaThreshold =1.4 # 40%  tolerance
+
 nbFaces = 0
+
+# test if the bounding box is homothetic to the source image and has a similar size
+def homothetic(c1,c2,area1,area2):  # (x,y,w,h)
+    ratio1 = float(c1[2]) / float(c1[3])
+    ratio2 = float(c2[2]) / float(c2[3])
+    tmp=max(ratio1,ratio2)/min(ratio1,ratio2)
+    print ("ratio area:%f" % (area1/area2))
+    print ("ratio w: %f - ratio h : %f - max-min : %f" % (ratio1, ratio2, tmp))
+    if tmp < homotheticThreshold and ((area1/area2) < areaThreshold):
+        return True
+    else:
+        return False
+
 
 def process_image(im):
 	# load the input image and construct an input blob for the image
 	# by resizing to a fixed 300x300 pixels and then normalizing it
 	image = cv2.imread(im.filename)
 	(h, w) = image.shape[:2]
+	areaImg = h * w
 	blob = cv2.dnn.blobFromImage(cv2.resize(image, (300, 300)), 1.0,(300, 300), (104.0, 177.0, 123.0))
 	outText=""
 	print ("**************\n",im.filename)
@@ -140,12 +166,16 @@ def process_image(im):
 			# extract the confidence (i.e., probability) associated with the prediction
 			confidence = detections[0, 0, i, 2]
 			# filter out weak detections by ensuring the `confidence` is greater than the minimum confidence
-			if (confidence > min_confidence):
+			if (confidence > minConfidence):
 				# compute the (x, y)-coordinates of the bounding box for the object
 				box = detections[0, 0, i, 3:7] * np.array([w, h, w, h])
 				(startX, startY, endX, endY) = box.astype("int")
-				if ((endX>w) or (endY>h)):
-					print (" out of image : %d %d") % (w,h)
+				wBox = endX-startX
+				hBox = endY-startY
+				if ((endX > w) or (endY > h)):
+					print (f" # out of image : {w} {h} #")
+				elif homothetic((0,0,w,h),(startX, startY, wBox, hBox), areaImg, wBox*hBox):
+					print (f" # homothetic : {w} {h} #")
 				else:
 					nbFaces += 1
 					text = "{:.2f}%".format(confidence * 100)
@@ -185,3 +215,6 @@ print(" loading model...")
 # https://towardsdatascience.com/review-ssd-single-shot-detector-object-detection-851a94607d11
 net = cv2.dnn.readNetFromCaffe("deploy.prototxt.txt", "res10_300x300_ssd_iter_140000.caffemodel")
 [process_image(im) for im in images]
+
+print (f"\n ### faces detected: {nbFaces} ###")
+print (f" ### images analysed: {len(images)} ###")
