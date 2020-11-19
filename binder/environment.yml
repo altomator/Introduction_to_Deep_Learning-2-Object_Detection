@@ -8,5 +8,5 @@ dependencies:
   - pillow
   - matplotlib
   - numpy
-  - cv2
+  - opencv
   - imutils
