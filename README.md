@@ -16,9 +16,9 @@ This Python 3 script uses dnn to call a ResNet SSD network (see [this post](http
 
 The images of a Gallica document are first loaded thanks to the IIIF protocol. The detection then occurs and annotated images are generated, as well as the CSV data. 
 
-Users may play with the confidence score value and look for the impact on the detection process. A basic filter on very large detections is implemented.
+Users may play with the confidence score value and look for the impact on the detection process. A basic filter on very large (and improbable) detections is implemented.
 
-Display the Jupyter notebook with nbviewer.
+Display the Jupyter notebook with [nbviewer](https://nbviewer.jupyter.org/github/altomator/Introduction_to_Deep_Learning-2-Face_Detection/blob/main/binder/faces-detection-with-dnn.ipynb).
 
 Launch the notebook with Binder:
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/altomator/Introduction_to_Deep_Learning-2-Face_Detection/HEAD?filepath=https%3A%2F%2Fgithub.com%2Faltomator%2FIntroduction_to_Deep_Learning-2-Face_Detection%2Fblob%2Fmain%2Fbinder%2Ffaces-detection-with-dnn.ipynb)
