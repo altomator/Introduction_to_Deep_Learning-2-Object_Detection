@@ -30,13 +30,34 @@ Launch the notebook with Binder:
 
 ![Front pages analysis: genders](https://github.com/altomator/Introduction_to_Deep_Learning-2-Face_Detection/blob/main/images/faces-excelsior.jpg)
 
-### IBM Watson
-IBM Watson Visual Recognition API may be used to perform face and gender detection. The Perl script described [here](https://github.com/altomator/Image_Retrieval) calls the API to perform visual recognition of content or human faces.
+### Google Cloud Vision 
 
-Some parameters should be set before running the script:
-- $ProcessIllThreshold: max number of illustrations to be processed (Watson allows a free amount of calls per day)
-- $CSthreshold: minimum confidence score for a classification to be used
-- $apiKeyWatson: your API key
+The Google Cloud Vision API may be used to perform face and gender detection. The Perl script described [here](https://github.com/altomator/Image_Retrieval) calls the API to perform visual recognition of content or human faces.
+
+First, we have to build a JSON request:
+
+```
+{
+	"requests": [{
+		"image": {
+			"content": "binary image content"
+		},
+		"features": [{
+			"type": "FACE_DETECTION",
+			"maxResults": "30"
+		}],
+		"imageContext": {
+			"languageHints": ["fr"]
+		}
+	}]
+}
+```                 
+
+Then the API endpoint is simply called with a curl command:
+
+```
+curl --max-time 10 -v -s -H "Content-Type: application/json" https://vision.googleapis.com/v1/images:annotate?key=AIzaSyBaeV7j-eOv6xb2wmPuk0z7MLHaLTgbfmE --data-binary @/tmp/request.json
+```
 
 
 ## Use cases
