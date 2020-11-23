@@ -6,8 +6,8 @@ Use case: face detection on heritage images
 ## Goals 
 Annotation of visages on heritage material for information retrieval, quantitative analysis, etc.
 
-![Face detection on engraving material](https://gallica.bnf.fr/ark:/12148/btv1b10544068q/f1](https://github.com/altomator/Introduction_to_Deep_Learning-2-Face_Detection/blob/main/images/visage.png)
-https://gallica.bnf.fr/ark:/12148/btv1b10544068q/f1
+![Face detection on engraving material](https://github.com/altomator/Introduction_to_Deep_Learning-2-Face_Detection/blob/main/images/visage.png)
+[ark:/12148/btv1b10544068q](https://gallica.bnf.fr/ark:/12148/btv1b10544068q/f1)
 
 
 ## Hands-on session 
