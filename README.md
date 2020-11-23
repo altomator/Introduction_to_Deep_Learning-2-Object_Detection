@@ -74,10 +74,10 @@ Note: [IBM Watson](https://www.ibm.com/blogs/policy/facial-recognition-sunset-ra
 
 - Averaging of faces: _[A Century of Portraits: A Visual Historical Record of American High School Yearbooks](https://arxiv.org/abs/1511.02575)_ (UC Berkeley)
 
-![Averaging of faces](https://github.com/altomator/Introduction_to_Deep_Learning-2-Face_Detection/blob/main/images/averaging.jpg)
+![Averaging of faces](https://github.com/altomator/Introduction_to_Deep_Learning-2-Face_Detection/blob/main/images/averaging.jpg). Face detection is generally the first step of an averaging pipeline.
 
 ## Resources
-- [Google Cloud Vision](https://cloud.google.com/vision/docs/detecting-faces)
+- Face detection with [Google Cloud Vision](https://cloud.google.com/vision/docs/detecting-faces)
 - [Kaggle faces dataset](https://www.kaggle.com/dataturks/face-detection-in-images)
 - Face detection with [Detectron2](https://medium.com/@sidakw/face-detection-using-pytorch-b756927f65ee)
 
