@@ -8,7 +8,7 @@ Annotation of visages on heritage material for information retrieval, quantitati
 
 ![Face detection on engraving material](https://github.com/altomator/Introduction_to_Deep_Learning-2-Face_Detection/blob/main/images/visage.png)
 
-<small>[ark:/12148/btv1b10544068q](https://gallica.bnf.fr/ark:/12148/btv1b10544068q/f1)</small>
+<sup>[ark:/12148/btv1b10544068q](https://gallica.bnf.fr/ark:/12148/btv1b10544068q/f1)</sup>
 
 
 ## Hands-on session 
