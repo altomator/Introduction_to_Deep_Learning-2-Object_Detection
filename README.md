@@ -1,19 +1,21 @@
 # Introduction to Deep Learning #2
-**Face Detection**
+**Facial detection**
 
 Use case: face detection on heritage images 
 
 ## Goals 
 Annotation of visages on heritage material for information retrieval, quantitative analysis, etc.
 
-![Face detection](https://github.com/altomator/Introduction_to_Deep_Learning-2-Face_Detection/blob/main/images/visage.png)
+![Face detection on engraving material](https://gallica.bnf.fr/ark:/12148/btv1b10544068q/f1](https://github.com/altomator/Introduction_to_Deep_Learning-2-Face_Detection/blob/main/images/visage.png)
+https://gallica.bnf.fr/ark:/12148/btv1b10544068q/f1
+
 
 ## Hands-on session 
 
 ### OpenCV/dnn
 The [OpenCV/dnn](https://www.pyimagesearch.com/2018/02/26/face-detection-with-opencv-and-deep-learning/) module can be used to try some pretrained neural network models imported from frameworks as Caffe or Tensorflow.
 
-This [Python 3 script](https://github.com/altomator/Introduction_to_Deep_Learning-2-Face_Detection/blob/main/binder/faces-detection-with-dnn.py) uses dnn to call a ResNet SSD network (see [this post](https://www.pyimagesearch.com/2018/02/26/face-detection-with-opencv-and-deep-learning/) for details). The model can be easily downloaded from the web.
+This [Python 3 script](https://github.com/altomator/Introduction_to_Deep_Learning-2-Face_Detection/blob/main/binder/faces-detection-with-dnn.py) uses dnn to call a ResNet SSD network (see [this post](https://www.pyimagesearch.com/2018/02/26/face-detection-with-opencv-and-deep-learning/) or this [notebook](https://colab.research.google.com/github/dortmans/ml_notebooks/blob/master/face_detection.ipynb) for details). The model can be easily downloaded from the web.
 
 The images of a Gallica document are first loaded thanks to the IIIF protocol. The detection then occurs and annotated images are generated, as well as the CSV data. 
 
@@ -73,7 +75,8 @@ Note: [IBM Watson](https://www.ibm.com/blogs/policy/facial-recognition-sunset-ra
 
 ![Averaging of faces](https://github.com/altomator/Introduction_to_Deep_Learning-2-Face_Detection/blob/main/images/averaging.jpg)
 
-
+## Resources
+- [Google Cloud Vision](https://cloud.google.com/vision/docs/detecting-faces)
 
 
 
