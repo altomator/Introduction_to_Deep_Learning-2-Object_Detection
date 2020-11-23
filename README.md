@@ -56,7 +56,7 @@ First, we have to build a JSON request:
 Then the API endpoint is simply called with a curl command:
 
 ```
-curl --max-time 10 -v -s -H "Content-Type: application/json" https://vision.googleapis.com/v1/images:annotate?key=AIzaSyBaeV7j-eOv6xb2wmPuk0z7MLHaLTgbfmE --data-binary @/tmp/request.json
+curl --max-time 10 -v -s -H "Content-Type: application/json" https://vision.googleapis.com/v1/images:annotate?key=your_key --data-binary @/tmp/request.json
 ```
 
 
