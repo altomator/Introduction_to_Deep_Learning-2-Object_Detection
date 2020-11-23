@@ -69,7 +69,7 @@ Note: [IBM Watson](https://www.ibm.com/blogs/policy/facial-recognition-sunset-ra
 
 ![Front pages analysis: genders](https://github.com/altomator/Introduction_to_Deep_Learning-2-Face_Detection/blob/main/images/faces-excelsior.jpg)
 
-- Data analysis of faces: _[A Century of Portraits: A Visual Historical Record of American High School Yearbooks](https://arxiv.org/abs/1511.02575)_ (UC Berkeley)
+- Averaging of faces: _[A Century of Portraits: A Visual Historical Record of American High School Yearbooks](https://arxiv.org/abs/1511.02575)_ (UC Berkeley)
 
 
 
