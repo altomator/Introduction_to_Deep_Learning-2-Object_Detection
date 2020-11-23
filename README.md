@@ -78,6 +78,6 @@ Note: [IBM Watson](https://www.ibm.com/blogs/policy/facial-recognition-sunset-ra
 
 ## Resources
 - [Google Cloud Vision](https://cloud.google.com/vision/docs/detecting-faces)
-
-
+- [Kaggle faces dataset](https://www.kaggle.com/dataturks/face-detection-in-images)
+- Face detection with [Detectron2](https://medium.com/@sidakw/face-detection-using-pytorch-b756927f65ee)
 
