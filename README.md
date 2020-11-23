@@ -3,7 +3,7 @@
 
 Use case: face detection on heritage images 
 
-# Goals 
+## Goals 
 Annotation of visages on heritage material for information retrieval, quantitative analysis, etc.
 
 ![Face detection](https://github.com/altomator/Introduction_to_Deep_Learning-2-Face_Detection/blob/main/images/visage.png)
