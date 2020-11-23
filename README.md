@@ -10,6 +10,7 @@ Annotation of visages on heritage material for information retrieval, quantitati
 
 ## Hands-on session 
 
+### OpenCV/dnn
 The [OpenCV/dnn](https://www.pyimagesearch.com/2018/02/26/face-detection-with-opencv-and-deep-learning/) module can be used to try some pretrained neural network models imported from frameworks as Caffe or Tensorflow.
 
 This Python 3 script uses dnn to call a ResNet SSD network (see [this post](https://www.pyimagesearch.com/2018/02/26/face-detection-with-opencv-and-deep-learning/) for details). The model can be easily downloaded from the web.
@@ -22,6 +23,21 @@ Display the Jupyter notebook with [nbviewer](https://nbviewer.jupyter.org/github
 
 Launch the notebook with Binder:
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/altomator/Introduction_to_Deep_Learning-2-Face_Detection/HEAD?filepath=https%3A%2F%2Fgithub.com%2Faltomator%2FIntroduction_to_Deep_Learning-2-Face_Detection%2Fblob%2Fmain%2Fbinder%2Ffaces-detection-with-dnn.ipynb)
+## Use cases
+- Information Retrieval: [GallicaPix](https://gallicapix.bnf.fr/rest?run=findIllustrations-app.xq&filter=1&start=1&action=first&module=1&locale=fr&similarity=&rValue=&gValue=&bValue=&corpus=1418&sourceTarget=&keyword=&kwTarget=&kwMode=&title=excelsior&author=&publisher=&fromDate=1915-01-01&toDate=1915-12-31&iptc=00&page=true&illTech=00&illFonction=00&illGenre=00&persType=faceM&classif1=&CBIR=*&classif2=&CS=0.5&operator=and&colName=00&size=31&density=26), men faces in 1915 issues of [_L'Excelsior_](https://gallica.bnf.fr/ark:/12148/cb32771891w/date.item)
+
+- Data analysis of newspapers front page: faces, gender (Excelsior, 1910-1920)
+
+![Front pages analysis: genders](https://github.com/altomator/Introduction_to_Deep_Learning-2-Face_Detection/blob/main/images/faces-excelsior.jpg)
+
+### IBM Watson
+IBM Watson Visual Recognition API may be used to perform face and gender detection. The Perl script described [here](https://github.com/altomator/Image_Retrieval) calls the API to perform visual recognition of content or human faces.
+
+Some parameters should be set before running the script:
+- $ProcessIllThreshold: max number of illustrations to be processed (Watson allows a free amount of calls per day)
+- $CSthreshold: minimum confidence score for a classification to be used
+- $apiKeyWatson: your API key
+
 
 ## Use cases
 - Information Retrieval: [GallicaPix](https://gallicapix.bnf.fr/rest?run=findIllustrations-app.xq&filter=1&start=1&action=first&module=1&locale=fr&similarity=&rValue=&gValue=&bValue=&corpus=1418&sourceTarget=&keyword=&kwTarget=&kwMode=&title=excelsior&author=&publisher=&fromDate=1915-01-01&toDate=1915-12-31&iptc=00&page=true&illTech=00&illFonction=00&illGenre=00&persType=faceM&classif1=&CBIR=*&classif2=&CS=0.5&operator=and&colName=00&size=31&density=26), men faces in 1915 issues of [_L'Excelsior_](https://gallica.bnf.fr/ark:/12148/cb32771891w/date.item)
@@ -29,6 +45,9 @@ Launch the notebook with Binder:
 - Data analysis of newspapers front page: faces, gender (Excelsior, 1910-1920)
 
 ![Front pages analysis: genders](https://github.com/altomator/Introduction_to_Deep_Learning-2-Face_Detection/blob/main/images/faces-excelsior.jpg)
+
+- Data analysis of faces: _[A Century of Portraits: A Visual Historical Record of American High School Yearbooks](https://arxiv.org/abs/1511.02575)_ (UC Berkeley)
+
 
 
 
