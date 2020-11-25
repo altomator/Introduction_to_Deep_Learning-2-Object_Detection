@@ -26,12 +26,8 @@ Display the Jupyter notebook with [nbviewer](https://nbviewer.jupyter.org/github
 
 Launch the notebook with Binder:
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/altomator/Introduction_to_Deep_Learning-2-Face_Detection/HEAD?filepath=https%3A%2F%2Fgithub.com%2Faltomator%2FIntroduction_to_Deep_Learning-2-Face_Detection%2Fblob%2Fmain%2Fbinder%2Ffaces-detection-with-dnn.ipynb)
-## Use cases
-- Information Retrieval: [GallicaPix](https://gallicapix.bnf.fr/rest?run=findIllustrations-app.xq&filter=1&start=1&action=first&module=1&locale=fr&similarity=&rValue=&gValue=&bValue=&corpus=1418&sourceTarget=&keyword=&kwTarget=&kwMode=&title=excelsior&author=&publisher=&fromDate=1915-01-01&toDate=1915-12-31&iptc=00&page=true&illTech=00&illFonction=00&illGenre=00&persType=faceM&classif1=&CBIR=*&classif2=&CS=0.5&operator=and&colName=00&size=31&density=26), men faces in 1915 issues of [_L'Excelsior_](https://gallica.bnf.fr/ark:/12148/cb32771891w/date.item)
 
-- Data analysis of newspapers front page: faces, gender (Excelsior, 1910-1920)
 
-![Front pages analysis: genders](https://github.com/altomator/Introduction_to_Deep_Learning-2-Face_Detection/blob/main/images/faces-excelsior.jpg)
 
 ### Google Cloud Vision 
 
@@ -64,7 +60,13 @@ curl --max-time 10 -v -s -H "Content-Type: application/json" https://vision.goog
 
 Note: [IBM Watson](https://www.ibm.com/blogs/policy/facial-recognition-sunset-racial-justice-reforms/) no longer offers facial detection.
 
-### 
+### Others approaches
+These deep learning systems are well known for facial recognition:
+- Facebook [DeepFace](https://en.wikipedia.org/wiki/DeepFace)
+- DeepID 
+- [VGGFace](https://github.com/rcmalli/keras-vggface)
+- Google [FaceNet](https://www.cv-foundation.org/openaccess/content_cvpr_2015/app/1A_089.pdf)
+- [wrapper](https://github.com/serengil/deepface) for vairous models
 
 
 
