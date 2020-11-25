@@ -66,7 +66,7 @@ These deep learning systems are well known for facial recognition:
 - DeepID 
 - [VGGFace](https://github.com/rcmalli/keras-vggface)
 - Google [FaceNet](https://www.cv-foundation.org/openaccess/content_cvpr_2015/app/1A_089.pdf)
-- [wrapper](https://github.com/serengil/deepface) for vairous models
+- [wrapper](https://github.com/serengil/deepface) for various models
 
 
 
