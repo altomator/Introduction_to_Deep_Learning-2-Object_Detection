@@ -64,6 +64,9 @@ curl --max-time 10 -v -s -H "Content-Type: application/json" https://vision.goog
 
 Note: [IBM Watson](https://www.ibm.com/blogs/policy/facial-recognition-sunset-racial-justice-reforms/) no longer offers facial detection.
 
+### 
+
+
 
 ## Use cases
 - Information Retrieval: [GallicaPix](https://gallicapix.bnf.fr/rest?run=findIllustrations-app.xq&filter=1&start=1&action=first&module=1&locale=fr&similarity=&rValue=&gValue=&bValue=&corpus=1418&sourceTarget=&keyword=&kwTarget=&kwMode=&title=excelsior&author=&publisher=&fromDate=1915-01-01&toDate=1915-12-31&iptc=00&page=true&illTech=00&illFonction=00&illGenre=00&persType=face&classif1=&CBIR=*&classif2=&CS=0.5&operator=and&colName=00&size=31&density=26), faces in the 1915 issues of [_L'Excelsior_](https://gallica.bnf.fr/ark:/12148/cb32771891w/date.item)
@@ -80,4 +83,6 @@ Note: [IBM Watson](https://www.ibm.com/blogs/policy/facial-recognition-sunset-ra
 - Face detection with [Google Cloud Vision](https://cloud.google.com/vision/docs/detecting-faces)
 - [Kaggle faces dataset](https://www.kaggle.com/dataturks/face-detection-in-images)
 - Face detection with [Detectron2](https://medium.com/@sidakw/face-detection-using-pytorch-b756927f65ee)
+- [Introduction](https://machinelearningmastery.com/introduction-to-deep-learning-for-face-recognition/)
+- [“Deep Face Recognition: A Survey"](https://arxiv.org/abs/1804.06655)
 
