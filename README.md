@@ -91,4 +91,4 @@ These deep learning systems are well known for facial recognition:
 - Face detection with [Detectron2](https://medium.com/@sidakw/face-detection-using-pytorch-b756927f65ee)
 - [Introduction](https://machinelearningmastery.com/introduction-to-deep-learning-for-face-recognition/)
 - [“Deep Face Recognition: A Survey"](https://arxiv.org/abs/1804.06655)
-
+- [Evaluation of object detection systems](https://pythonawesome.com/most-popular-metrics-used-to-evaluate-object-detection-algorithms/)
