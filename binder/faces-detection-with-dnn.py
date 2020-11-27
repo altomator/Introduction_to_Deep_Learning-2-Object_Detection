@@ -6,24 +6,37 @@
 import sys
 import cv2
 import os, fnmatch
+from collections import namedtuple
+import csv
 
 # insert here the Gallica document ID you want to process
-#docID = '12148/bpt6k46000341' # quotidien
+docID = '12148/bpt6k46000341' # quotidien
 #docID = '12148/btv1b6931954n' # photo
 #docID = '12148/btv1b10336854c' # album
 #docID = '12148/btv1b10544068q' # estampe
-docID = '12148/bpt6k65414058' # Vogue magazine
+#docID = '12148/bpt6k65414058' # Vogue magazine
+
+# do we want to evaluate the detection against a ground truth?
+eval_flag = True
 # IIIF export factor (%)
 doc_export_factor = 10
 # get docMax images
-doc_max = 10
+doc_max = 12
 # CSV data export
 output = "OUT_csv"
 # minimum confidence score to keep the detections
-min_confidence = 0.1
+min_confidence = 0.10
 # detecting  homothetic contours
 homothetic_threshold = 1.3 # 30%  tolerance
 area_threshold =1.4 # 40%  tolerance
+
+# Evaluation of performances
+# define the `Detection` object
+Detection = namedtuple("Detection", ["image_path", "gt", "pred"])
+evals = []
+gt_file = "GT_10%.csv"
+gt = {} # dictionary for the crops
+iou_mean=[]
 
 #############################
 print("Python version")
@@ -54,6 +67,7 @@ r.raise_for_status()
 json_4img = r.json()
 print (json_4img.keys())
 
+##################
 # 2. Now we load the images files thanks to the IIIF Image protocol
 from iiif_api import IIIF #  get the image files with the IIIF Image API (PyGallica package again)
 
@@ -145,9 +159,7 @@ images = [path_to_pil(e) for e in entries]
 import numpy as np
 from imutils import paths
 
-
-
-nb_faces = 0
+n_faces = 0
 
 # test if the bounding box is homothetic to the source image and has a similar size
 def homothetic(c1,c2,area1,area2):  # (x,y,w,h)
@@ -162,21 +174,23 @@ def homothetic(c1,c2,area1,area2):  # (x,y,w,h)
         return False
 
 def process_image(im):
+
+	global n_faces # total number of detected faces
+	n_faces_im = 0 #  number of detected faces
+
 	# load the input image and construct an input blob for the image
 	# by resizing to a fixed 300x300 pixels and then normalizing it
-	image = cv2.imread(im.filename)
+	file_name=im.filename
+	image = cv2.imread(file_name)
 	(h, w) = image.shape[:2]
 	areaImg = h * w
 	blob = cv2.dnn.blobFromImage(cv2.resize(image, (300, 300)), 1.0,(300, 300), (104.0, 177.0, 123.0))
 	outText=""
-	print ("\n**************\n",im.filename)
-	docID = im.filename[0:-4]
-
-	global nb_faces
+	print ("\n**************\n",file_name)
+	docID = file_name[0:-4]
 	# pass the blob through the network and obtain the detections and predictions
 	net.setInput(blob)
 	detections = net.forward()
-
 	# loop over the detections
 	for i in range(0, detections.shape[2]):
 			# extract the confidence (i.e., probability) associated with the prediction
@@ -193,17 +207,27 @@ def process_image(im):
 				elif homothetic((0,0,w,h),(startX, startY, wBox, hBox), areaImg, wBox*hBox):
 					print (f" # homothetic : {w} {h} #")
 				else:
-					nb_faces += 1
+					n_faces += 1
 					text = "{:.2f}%".format(confidence * 100)
 					#print "\t%s" % text
 					#print (startX, startY,(endX-startX),(endY-startY))
 					# draw the boxes
-					cv2.rectangle(image, (startX, startY), (endX, endY),(0, 0, 255), 2)
-					cv2.putText(image, text, (startX, startY),cv2.FONT_HERSHEY_SIMPLEX, 0.45, (0, 0, 255), 2)
-					# build the csv data
-					if (outText ==""):
-						outText = " %d,%d,%d,%d,%.2f" % (startX, startY,(endX-startX), (endY-startY), confidence)
-					else:
+					if not(eval_flag):
+						cv2.rectangle(image, (startX, startY), (endX, endY),(0, 0, 255), 1)
+						cv2.putText(image, file_name, (startX, startY),cv2.FONT_HERSHEY_SIMPLEX, 0.4, (0, 0, 00), 1)
+						cv2.putText(image, text, (startX, startY+30),cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 200),2)
+					# build the csv data: x,y,w,h
+					if (outText == ""):
+						# for evaluation, we only consider the case of one face per image
+						if eval_flag:
+							if file_name in gt.keys():
+								print (" -> we have a GT")
+								gt_crop = gt[file_name]
+								evals.append(Detection(file_name,gt_crop,[startX, startY, endX, endY]))
+							else:
+								print (f" -> {file_name} has no GT")
+						outText = "%d,%d,%d,%d,%.2f" % (startX, startY,(endX-startX), (endY-startY), confidence)
+					else: # appending multiple detections
 						outText = "%s %d,%d,%d,%d,%.2f" % (outText, startX, startY,(endX-startX), (endY-startY),confidence)
 
     # convert from openCV2 to PIL. Notice the COLOR_BGR2RGB which means that
@@ -214,27 +238,107 @@ def process_image(im):
 	if outText != "":
 		print ("->",outText)
         # write in file
-		print ("%s\t%s" % (im.filename,outText), file=out_file)
-		#print req_url
-        # show the output image
-		#cv2.imshow("Output", image)
-		#cv2.waitKey(0)
+		print ("%s\t%s" % (file_name,outText), file=out_file)
 	else:
 		print (" --> no detection!")
-	#display(pil_image)
-	cv2.imshow("Output", image)
+		if eval_flag:
+			if file_name in gt.keys():
+				print (" ... but we have a GT!")
+				gt_crop = gt[file_name]
+				evals.append(Detection(file_name,gt_crop,[0,0,0,0]))
+
+	# show the output image
+	if not(eval_flag):
+		cv2.imshow("Output", image)
+		cv2.waitKey(0)
+	#cv2.imshow("Output", image)
+	#cv2.waitKey(0)
+
+##############################
+# Evaluation
+# IOU computation
+def intersection_over_union(boxA, boxB):
+	# determine the (x, y)-coordinates of the intersection rectangle
+	xA = max(boxA[0], boxB[0])
+	yA = max(boxA[1], boxB[1])
+	xB = min(boxA[2], boxB[2])
+	yB = min(boxA[3], boxB[3])
+	# compute the area of intersection rectangle
+	interArea = max(0, xB - xA + 1) * max(0, yB - yA + 1)
+	# compute the area of both the prediction and ground-truth
+	# rectangles
+	boxAArea = (boxA[2] - boxA[0] + 1) * (boxA[3] - boxA[1] + 1)
+	boxBArea = (boxB[2] - boxB[0] + 1) * (boxB[3] - boxB[1] + 1)
+	# compute the intersection over union by taking the intersection
+	# area and dividing it by the sum of prediction + ground-truth
+	# areas - the interesection area
+	iou = interArea / float(boxAArea + boxBArea - interArea)
+	# return the intersection over union value
+	return iou
+
+# building the image with its GT and prediction crops
+def process_eval(detection):
+
+	print (detection)
+	# load the image
+	image = cv2.imread(detection.image_path)
+	# draw the ground-truth bounding box along with the predicted
+	# bounding box
+	cv2.rectangle(image, tuple(detection.gt[:2]),
+		tuple(detection.gt[2:]), (0, 255, 0), 1)
+	cv2.rectangle(image, tuple(detection.pred[:2]),
+		tuple(detection.pred[2:]), (0, 0, 200), 1)
+	# compute the intersection over union and display it
+	iou = intersection_over_union(detection.gt, detection.pred)
+	cv2.putText(image, detection.image_path, (10, 30),
+		cv2.FONT_HERSHEY_SIMPLEX, 0.4, (0, 0, 0), 1)
+	cv2.putText(image, "IoU: {:.4f}".format(iou), (10, 50),
+		cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 200, 0), 2)
+	print(" -> {}: {:.3f}".format(detection.image_path, iou))
+	iou_mean.append(iou)
+	# show the output image
+	cv2.imshow("Image", image)
 	cv2.waitKey(0)
 
+def Average(lst):
+    return sum(lst) / len(lst)
+
 #########################
-## Main ##
+##        Main         ##
 print("... loading the SSD model")
 # Single Shot Detector (SSD) model / https://arxiv.org/abs/1512.02325
 # https://towardsdatascience.com/review-ssd-single-shot-detector-object-detection-851a94607d11
 net = cv2.dnn.readNetFromCaffe("deploy.prototxt.txt", "res10_300x300_ssd_iter_140000.caffemodel")
+# reading the ground truth
+if eval_flag:
+	print("... reading the ground truth")
+	with open(gt_file, newline='') as csvfile:
+		spamreader = csv.reader(csvfile, delimiter='\t', quotechar='|')
+		for row in spamreader:
+			#print(', '.join(row))
+			print ("  file: ",row[0]) # the file
+			crop = row[1].split(',') # the crop
+			int_array = [int(numeric_string) for numeric_string in crop]
+			gt[row[0]] = int_array
+	print (f"... we get {len(gt)} images with a ground truth")
+
 print ("... now infering")
 [process_image(im) for im in images]
 out_file.close()
-print (f"\n ... writing classification data in {output} \n")
+print (f"\n ... writing classification data in {output} ")
 
-print (f"\n ### faces detected: {nb_faces} ###")
+print (f"\n ### faces detected: {n_faces} ###")
 print (f" ### images analysed: {len(images)} ###")
+print ("---------------------------")
+
+if eval_flag:
+	print("\n... now evaluating")
+	# processing the predictions which have a GT
+	if len(evals)==0:
+		print (" -> we don't have any GT!")
+	else:
+		[process_eval(e) for e in evals]
+		print ("---------------------------")
+		print (" -> average of IOUs: {:.3f}".format(Average(iou_mean)))
+
+#########################
