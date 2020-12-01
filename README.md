@@ -91,5 +91,7 @@ These deep learning systems are well known for facial recognition:
 - Face detection with [Detectron2](https://medium.com/@sidakw/face-detection-using-pytorch-b756927f65ee)
 - [Introduction](https://machinelearningmastery.com/introduction-to-deep-learning-for-face-recognition/)
 - [“Deep Face Recognition: A Survey"](https://arxiv.org/abs/1804.06655)
-- [How SSD works?](https://developers.arcgis.com/python/guide/how-ssd-works/)
+- [Wei Liu, Dragomir Anguelov, Dumitru Erhan, Christian Szegedy, Scott Reed, Cheng-Yang Fu: “SSD: Single Shot MultiBox Detector”, 2016; arXiv:1512.02325](https://arxiv.org/abs/1506.02640)
+- [Dang Ha The Hien. A guide to receptive field arithmetic for Convolutional Neural Networks](https://medium.com/mlreview/a-guide-to-receptive-field-arithmetic-for-convolutional-neural-networks-e0f514068807)
+- [Howard Jeremy. Lesson 9: Deep Learning Part 2 2018 - Multi-object detection](https://docs.fast.ai/vision.models.unet.html#Dynamic-U-Net)
 - [Evaluation of object detection systems](https://pythonawesome.com/most-popular-metrics-used-to-evaluate-object-detection-algorithms/)
