@@ -13,18 +13,14 @@ Annotation of object on heritage material for information retrieval, quantitativ
 
 ## Hands-on session 
 
-### Yolo v4
-The [OpenCV/dnn](https://www.pyimagesearch.com/2018/02/26/face-detection-with-opencv-and-deep-learning/) module can be used to try some pretrained neural network models imported from frameworks as Caffe or Tensorflow.
+### YOLO v3 and v4
+YOLO v3 (https://pjreddie.com/darknet/yolo/) performs object detection on a 80 classes model. YOLO is well known to be fast and accurate.
 
-This [Python 3 script](https://github.com/altomator/Introduction_to_Deep_Learning-2-Face_Detection/blob/main/binder/faces-detection-with-dnn.py) uses dnn to call a ResNet SSD network (see [this post](https://www.pyimagesearch.com/2018/02/26/face-detection-with-opencv-and-deep-learning/) or this [notebook](https://colab.research.google.com/github/dortmans/ml_notebooks/blob/master/face_detection.ipynb) for details). The model can be easily downloaded from the web.
+This [Python 3 script](https://github.com/altomator/Introduction_to_Deep_Learning-2-Face_Detection/blob/main/binder/yolov4.py) uses dnn to ca The model can be easily downloaded from the web.
 
 The images of a Gallica document are first loaded thanks to the IIIF protocol. The detection then occurs and annotated images are generated, as well as the CSV data. 
 
-Users may play with the confidence score value and look for the impact on the detection process. A basic filter on very large (and improbable) detections is implemented.
 
-A final stage of  evaluation of the quality of the detection is carried out, using the [intersection over union](https://en.wikipedia.org/wiki/Jaccard_index) (IOU) method. A basic Python implementation is performed, processing only images that include a single face. For an effective method, see this [implementation](https://pythonawesome.com/most-popular-metrics-used-to-evaluate-object-detection-algorithms/). Ground truth images are annotated thanks to the [VGG Image Annotator](http://www.robots.ox.ac.uk/~vgg/software/via/via_demo.html).
-
-![IOU result on a test image](https://github.com/altomator/Introduction_to_Deep_Learning-2-Face_Detection/blob/main/images/iou.jpg)
 
 Display the Jupyter notebook with [nbviewer](https://nbviewer.jupyter.org/github/altomator/Introduction_to_Deep_Learning-2-Face_Detection/blob/main/binder/faces-detection-with-dnn.ipynb).
 
@@ -33,11 +29,11 @@ Launch the notebook with Binder:
 
 
 
-### Google Cloud Vision 
+### Google Cloud Vision, IBM Watson 
 
-The Google Cloud Vision API may be used to perform face and gender detection. The Perl script described [here](https://github.com/altomator/Image_Retrieval) calls the API to perform visual recognition of content or human faces.
+These APIs may be used to perform objects detection. The Perl script described [here](https://github.com/altomator/Image_Retrieval) calls the APIs.
 
-First, we have to build a JSON request:
+For Google, first, we have to build a JSON request:
 
 ```
 {
@@ -62,15 +58,8 @@ Then the API endpoint is simply called with a curl command:
 curl --max-time 10 -v -s -H "Content-Type: application/json" https://vision.googleapis.com/v1/images:annotate?key=your_key --data-binary @/tmp/request.json
 ```
 
-Note: [IBM Watson](https://www.ibm.com/blogs/policy/facial-recognition-sunset-racial-justice-reforms/) no longer offers facial detection.
 
 ### Others approaches
-These deep learning systems are well known for facial recognition:
-- Facebook [DeepFace](https://en.wikipedia.org/wiki/DeepFace)
-- DeepID 
-- [VGGFace](https://github.com/rcmalli/keras-vggface)
-- Google [FaceNet](https://www.cv-foundation.org/openaccess/content_cvpr_2015/app/1A_089.pdf)
-- [wrapper](https://github.com/serengil/deepface) for various models
 
 
 
