@@ -6,9 +6,9 @@ Use case: object detection on heritage images
 ## Goals 
 Annotation of object on heritage material for information retrieval, quantitative analysis, etc.
 
-![Object detection on engraving material](https://github.com/altomator/Introduction_to_Deep_Learning-2-Object_Detection/blob/main/images/objet.png)
+![Object detection on engraving material](https://github.com/altomator/Introduction_to_Deep_Learning-2-Object_Detection/blob/main/images/objet.jpg)
 
-<sup>[ark:/12148/btv1b10544068q](https://gallica.bnf.fr/ark:/12148/btv1b10544068q/f1)</sup>
+<sup>[ark:/12148/bpt6k65413493](https://gallica.bnf.fr/ark:/12148/bpt6k65413493/f964.item)</sup>
 
 
 ## Hands-on session 
