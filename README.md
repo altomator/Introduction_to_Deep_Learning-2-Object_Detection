@@ -45,8 +45,8 @@ Same is true for YOLO, using a commercial web app like [Roboflow](https://blog.r
 ## Use cases
 
 - Information Retrieval: 
-- [GallicaPix](https://github.com/altomator/Image_Retrieval) web app; 
-- [Digitens](http://www.digitens.fr/1/accueil) project:
+-- [GallicaPix](https://github.com/altomator/Image_Retrieval) web app; 
+-- [Digitens](http://www.digitens.fr/1/accueil) project:
 
 - [Helsinki Digital Humanities Hackathon 2019](https://www.helsinki.fi/en/helsinki-centre-for-digital-humanities/dhh-hackathon/helsinki-digital-humanities-hackathon-2019-dhh19): data analysis of [newspapers illustrated adds](https://github.com/altomator/Ads-data_mining) regarding transport means 
 
