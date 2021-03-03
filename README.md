@@ -48,7 +48,7 @@ Same is true for YOLO, using a commercial web app like [Roboflow](https://blog.r
 
 - Data analysis of newspapers illustrated adds: 
 
-- [Numapress](http://www.numapresse.org/) project: data analysis of newspapers [movie section](http://www.numapresse.org/exploration/cinema_pages/query_illustration.php): 
+- [Numapress](http://www.numapresse.org/) project: data analysis and information retrieval on the newspapers [movie section](http://www.numapresse.org/exploration/cinema_pages/query_illustration.php) (1900-1945): 
 
 [![Object detection on newspapers illustrations](https://github.com/altomator/Introduction_to_Deep_Learning-2-Object_Detection/blob/main/images/numapress.jpg)](http://www.numapresse.org/exploration/cinema_pages/query_illustration.php)
 
