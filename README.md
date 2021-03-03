@@ -57,7 +57,7 @@ Same is true for YOLO, using a commercial web app like [Roboflow](https://blog.r
 
 [![Object detection on newspapers illustrations](https://github.com/altomator/Introduction_to_Deep_Learning-2-Object_Detection/blob/main/images/numapress.jpg)](http://www.numapresse.org/exploration/cinema_pages/query_illustration.php)
 
-  - Telecom Paris-Tech, Nicolas Gonthier. Apprentissage faiblement supervisé, Weakly Supervised Object Detection in Artworks
+  - Telecom Paris-Tech, Nicolas Gonthier: [Weakly Supervised Object Detection in Artworks](https://wsoda.telecom-paristech.fr/)
 
 
 
