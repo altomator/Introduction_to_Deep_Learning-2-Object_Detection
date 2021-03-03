@@ -50,7 +50,7 @@ Same is true for YOLO, using a commercial web app like [Roboflow](https://blog.r
 
 - [Numapress](http://www.numapresse.org/) project: data analysis of newspapers [movie section](http://www.numapresse.org/exploration/cinema_pages/query_illustration.php): 
 
-[![Object detection on newspapers illustrations](https://github.com/altomator/Introduction_to_Deep_Learning-2-Object_Detection/blob/main/images/numapress.JPG)](http://www.numapresse.org/exploration/cinema_pages/query_illustration.php)
+[![Object detection on newspapers illustrations](https://github.com/altomator/Introduction_to_Deep_Learning-2-Object_Detection/blob/main/images/numapress.jpg)](http://www.numapresse.org/exploration/cinema_pages/query_illustration.php)
 
 
 ## Resources
