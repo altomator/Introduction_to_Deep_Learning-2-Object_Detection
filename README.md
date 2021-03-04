@@ -66,6 +66,6 @@ Same is true for YOLO, using a commercial web app like [Roboflow](https://blog.r
 
 
 ## Resources
-- [Object Dtection in a Nutshell](https://goraft.tech/2020/05/01/object-detection-in-a-nutshell.html)
+- [Object Detection in a Nutshell](https://goraft.tech/2020/05/01/object-detection-in-a-nutshell.html)
 
 
