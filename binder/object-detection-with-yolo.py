@@ -1,14 +1,17 @@
 ### **This Python 3 notebook extracts images of a Gallica document (using the IIIF protocol),
-### and then applies face detection to the images**
+### and then applies object detection to the images**
 # 1. Extract the document technical image metadata from its IIIF manifest,
 # 2. Load the IIIF images
-# 3. Apply a SSD Resnet model with openCV/dnn module
+# 3. Apply a yolo model
+
+#### Usage: python3 object-detection-with-yolo.py --dir folder --yolo yolo_v4
 
 import sys
 import cv2
 import os, fnmatch
 from collections import namedtuple
 import csv
+import time
 
 # insert here the Gallica document ID you want to process
 docID = '12148/bpt6k46000341' # quotidien
@@ -21,30 +24,37 @@ docID = '12148/bpt6k46000341' # quotidien
 doc_export_factor = 10
 # get docMax images
 doc_max = 2
-# CSV data export
+# data export
 output = "OUT_csv"
+output_img = "OUT_img"
+
 # minimum confidence score to keep the detections
-min_confidence = 0.10
-# detecting  homothetic contours
-homothetic_threshold = 1.3 # 30%  tolerance
-area_threshold =1.4 # 40%  tolerance
+min_confidence = 0.20
+# threshold when applying non-maxima suppression
+threshold = 0.30
 
 
 #############################
 print("Python version")
 print (sys.version)
 
-#######################
+########## CSV output #############
 output_dir = os.path.realpath(output)
 if not os.path.isdir(output_dir):
-	print(f"\n  Output .csv directory {output} does not exist!\n")
+	print(f"\n  Creating .csv directory {output}...")
 	os.mkdir(output_dir);
-else:
-	print (f"\n... CSV files will be saved to {output}\n")
 
-# writing the results in out_path
-out_path = os.path.join(output, "classifications.csv" )
-out_file = open(out_path,"w")
+print (f"\n... CSV files will be saved to {output}")
+
+########## CSV output #############
+output_img_dir = os.path.realpath(output_img)
+if not os.path.isdir(output_img_dir):
+	print(f"\n  Creating img directory {output_img}...")
+	os.mkdir(output_img_dir);
+
+print (f"\n... images files will be saved to {output_img}\n")
+
+
 
 #########################
 # 1. we build the IIIF URL
@@ -137,13 +147,7 @@ def display_images(
             plt.title(title, fontsize=label_font_size);
 
 # first we read the images on disk
-entries = fnmatch.filter(os.listdir(docID), '*.jpg')
-images = [path_to_pil(e) for e in entries]
-
-#display_images(images)
-#for im in images:
-#   display(im)
-
+image_paths = fnmatch.filter(os.listdir(docID), '*.jpg')
 
 #########################
 # 3. Now we process the images for objects detection
@@ -151,21 +155,124 @@ images = [path_to_pil(e) for e in entries]
 import numpy as np
 from imutils import paths
 
-n_objects = 0
+nb_objects = 0
 
-# test if the bounding box is homothetic to the source image and has a similar size
-def homothetic(c1,c2,area1,area2):  # (x,y,w,h)
-    ratio1 = float(c1[2]) / float(c1[3])
-    ratio2 = float(c2[2]) / float(c2[3])
-    tmp=max(ratio1,ratio2)/min(ratio1,ratio2)
-    print (" ratio area: %f" % (area1/area2))
-    print (" ratio w: %f - ratio h : %f - max-min : %f" % (ratio1, ratio2, tmp))
-    if tmp < homothetic_threshold and ((area1/area2) < area_threshold):
-        return True
-    else:
-        return False
 
-def process_image(im):
+def process_image(image,file_ID):
+	# load our input image and grab its spatial dimensions
+	file_name=image.filename
+	print ("\n...analysing %s" % file_name)
+	try:
+		image = cv2.imread(file_name)
+		(H, W) = image.shape[:2]
+	except ValueError:
+		print("Unexpected error:", sys.exc_info()[0])
+		return
+
+	global nb_objects
+	outText=""
+
+	# determine only the *output* layer names that we need from YOLO
+	ln = net.getLayerNames()
+	ln = [ln[i[0] - 1] for i in net.getUnconnectedOutLayers()]
+
+	# construct a blob from the input image and then perform a forward
+	# pass of the YOLO object detector, giving us our bounding boxes and
+	# associated probabilities
+	blob = cv2.dnn.blobFromImage(image, 1 / 255.0, (416,416), swapRB=True, crop=False)
+	net.setInput(blob)
+	start = time.time()
+	layerOutputs = net.forward(ln)
+	end = time.time()
+
+	# show timing information on YOLO
+	#print(" YOLO took {:.6f} seconds".format(end - start))
+
+	# initialize our lists of detected bounding boxes, confidences, and
+	# class IDs, respectively
+	boxes = []
+	confidences = []
+	classIDs = []
+
+	# loop over each of the layer outputs
+	for output in layerOutputs:
+		# loop over each of the detections
+		for detection in output:
+			# extract the class ID and confidence (i.e., probability) of
+			# the current object detection
+			scores = detection[5:]
+			classID = np.argmax(scores)
+			confidence = scores[classID]
+
+			# filter out weak predictions by ensuring the detected
+			# probability is greater than the minimum probability
+			if confidence > min_confidence:
+				# scale the bounding box coordinates back relative to the
+				# size of the image, keeping in mind that YOLO actually
+				# returns the center (x, y)-coordinates of the bounding
+				# box followed by the boxes' width and height
+				box = detection[0:4] * np.array([W, H, W, H])
+				(centerX, centerY, width, height) = box.astype("int")
+
+				# use the center (x, y)-coordinates to derive the top and
+				# and left corner of the bounding box
+				x = int(centerX - (width / 2))
+				y = int(centerY - (height / 2))
+
+				# update our list of bounding box coordinates, confidences,
+				# and class IDs
+				boxes.append([x, y, int(width), int(height)])
+				confidences.append(float(confidence))
+				classIDs.append(classID)
+
+	# apply non-maxima suppression to suppress weak, overlapping bounding boxes
+	idxs = cv2.dnn.NMSBoxes(boxes, confidences, min_confidence, threshold)
+
+	# ensure at least one detection exists
+	if len(idxs) > 0:
+		# loop over the indexes we are keeping
+		for i in idxs.flatten():
+			nb_objects += 1
+			# extract the bounding box coordinates
+			(x, y) = (boxes[i][0], boxes[i][1])
+			(w, h) = (boxes[i][2], boxes[i][3])
+
+			# build the CSV data
+			if (outText ==""):
+				outText = "%s,%d,%d,%d,%d,%.2f" % (LABELS[classIDs[i]], x, y, w, h, confidences[i])
+			else:
+				outText = "%s_%s,%d,%d,%d,%d,%.2f" % (outText, LABELS[classIDs[i]], x, y, w, h, confidences[i])
+			# draw a bounding box rectangle and label on the image
+			color = [int(c) for c in COLORS[classIDs[i]]]
+			cv2.rectangle(image, (x, y), (x + w, y + h), color, 2)
+			text = "{}: {:.4f}".format(LABELS[classIDs[i]], confidences[i])
+			cv2.putText(image, text, (x, y - 5), cv2.FONT_HERSHEY_SIMPLEX,0.5, color, 2)
+			#imS = cv2.resize(image, None,fx=0.3, fy=0.3, interpolation = cv2.INTER_CUBIC)
+			# show the output image
+			#cv2.imshow("Image", imS)
+			#cv2.waitKey(0)
+			print (text)
+
+		if outText != "":
+			# open output file
+			out_CSV_file = os.path.join(output_dir, docID, "%s.csv" % file_ID)
+			out_CSV_path = os.path.join(output_dir, docID)
+			if not(os.path.exists(out_CSV_path)):
+				os.makedirs(out_CSV_path);
+			out = open(out_CSV_file,"w")
+			print ("%s;%s" % (file_name, outText), file=out) # separator = ;
+			out.close()
+			# show the output image
+			#cv2.imshow("Output", image)
+			#cv2.waitKey(0)
+			# save image
+			out_img_path = os.path.join(output_img_dir, f"{file_ID}.jpg" )
+			print ("...writing annotated image:", f"{file_ID}.jpg")
+			cv2.imwrite(out_img_path, image)
+		else:
+			print ("\tno detection")
+
+def process_image_old(im):
 
 	global n_objects # total number of detected faces
 	n_faces_im = 0 #  number of detected faces
@@ -250,7 +357,7 @@ def process_image(im):
 #########################
 ##        Main         ##
 print("... loading the model")
-labelsPath = os.path.sep.join([args["yolo"], "coco.names"])
+labelsPath = os.path.sep.join(["yolo_v4", "coco.names"])
 LABELS = open(labelsPath).read().strip().split("\n")
 
 # initialize a list of colors to represent each possible class label
@@ -258,20 +365,24 @@ np.random.seed(42)
 COLORS = np.random.randint(0, 255, size=(len(LABELS), 3), dtype="uint8")
 
 # derive the paths to the YOLO weights and model configuration
-weightsPath = os.path.sep.join([args["yolo"], "yolov4.weights"])
-configPath = os.path.sep.join([args["yolo"], "yolov4.cfg"])
+weightsPath = os.path.sep.join(["yolo_v4", "yolov4.weights"])
+configPath = os.path.sep.join(["yolo_v4", "yolov4.cfg"])
 
 # load our YOLO object detector trained on COCO dataset (80 classes)
 print("... loading YOLO from disk...")
 net = cv2.dnn.readNetFromDarknet(configPath, weightsPath)
 
 print ("... now infering")
-[process_image(im) for im in images]
-out_file.close()
-print (f"\n ... writing classification data in {output} ")
+for i in image_paths:
+	file_ID = os.path.splitext(os.path.basename(i))[0]
+	image = path_to_pil(i)
+	try:
+		process_image(image,file_ID)
+	except AttributeError as exc:
+		print("Unexpected error:", exc)
 
-print (f"\n ### objects detected: {n_objects} ###")
-print (f" ### images analysed: {len(images)} ###")
+print (f"\n ### objects detected: {nb_objects} ###")
+print (f" ### images analysed: {len(image_paths)} ###")
 print ("---------------------------")
 
 #########################
