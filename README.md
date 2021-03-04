@@ -32,10 +32,25 @@ These APIs may be used to perform objects detection. The Perl script described [
 > perl toolbox.pl -CC datafile -google
 ```
 
-The API endpoint is simply called with a curl command sending the local image files:
+The API endpoint is simply called with a curl command sending  the request to the API as a JSON fragment including the image data and the features expected to be returned:
 
 ```
+> curl --insecure  -v -s -H "Content-Type: application/json" https://vision.googleapis.com/v1/images:annotate?key=yourKey --data-binary @/tmp/request.jso
+```
 
+```
+  ...
+	"features": [
+			{
+				"type": "LABEL_DETECTION"
+			},
+			{
+				"type": "CROP_HINTS"
+			},
+			{
+				"type": "IMAGE_PROPERTIES"
+			}
+		], ...
 ```
 
 
