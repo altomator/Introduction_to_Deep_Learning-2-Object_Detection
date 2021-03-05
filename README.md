@@ -93,7 +93,7 @@ There is almost no reason to start from complete scratch, as the pretreained mod
 
 ## Use cases
 
-- **Information Retrieval:** 
+- **Information Retrieval:** the labels of the object classes are used as metadata and generally feed the library search engine.
   - [GallicaPix](https://github.com/altomator/Image_Retrieval) web app; 
   - [Digitens](https://www.univ-brest.fr/digitens/) project: indexing [wallpaper and textile design patterns](https://gallica.bnf.fr/blog/14032019/murs-de-papier-la-collection-de-papiers-peints-du-18eme-siecle-dans-gallica-historique-1?mode=desktop) from the [The National Archives](https://www.nationalarchives.gov.uk/) and the BnF
   - [Standford University Library: Clustering and Classification on all public images](https://sites.google.com/stanford.edu/sul-ai-studio/clustering-and-classification-on-all-public-images)
@@ -101,7 +101,7 @@ There is almost no reason to start from complete scratch, as the pretreained mod
   
 [![Object detection on patterns: lines](https://github.com/altomator/Introduction_to_Deep_Learning-2-Object_Detection/blob/main/images/tna.jpg)](https://gallicapix.bnf.fr/rest?run=findIllustrations-app.xq&locale=fr&action=first&start=1&corpus=PP&classif2=ligne&CS=0.5&operator=and&sourceTarget=&keyword=&module=0.5)
 
-- **Digital Humanities:**
+- **Digital Humanities:** in this context, labels and bounding boxes are used for retrieval or data mining scenarii.
   - [Helsinki Digital Humanities Hackathon 2019](https://www.helsinki.fi/en/helsinki-centre-for-digital-humanities/dhh-hackathon/helsinki-digital-humanities-hackathon-2019-dhh19): data analysis of [newspapers illustrated adds](https://github.com/altomator/Ads-data_mining) regarding transport means 
 
   - [Numapress](http://www.numapresse.org/) project: data analysis and information retrieval on the newspapers [movie section](http://www.numapresse.org/exploration/cinema_pages/query_illustration.php) (1900-1945): 
