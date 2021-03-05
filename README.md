@@ -5,14 +5,18 @@ Use case: object detection on heritage images
 
 ## Goals 
 
-Automatic annotation of objects on heritage images has uses in the field of information retrieval and digital humanities. Depending on the scenarios considered, this may involve obtaining a new source of textual metadata ("this image contains a *cat*, a *child* and a *sofa*") or locating the detected objects within the image (in this image, there is a *car* at position *x,y,w,h*).  
+Automatic annotation of objects on heritage images has uses in the field of information retrieval and digital humanities. Depending on the scenarios considered, this may involve obtaining a new source of textual metadata ("this image contains a *cat*, a *child* and a *sofa*") or locating every object classes of interest within the image (in this image, there is a *car* at position *x,y,w,h*).  
+
+These goals can be satisfy with "out-of-the-box" services or customized solutions. 
 
 ![Object detection on engraving material](https://github.com/altomator/Introduction_to_Deep_Learning-2-Object_Detection/blob/main/images/objet.JPG)
-
+<sup>*Vogue magazine*, French edition, 1922</sup>
 
 ## Hands-on session 
 
-### YOLO
+### "Out-of-the-box" services 
+
+#### YOLO
 [YOLO](https://pjreddie.com/darknet/yolo/) performs object detection on a 80 classes model. YOLO is well known to be fast and accurate.
 
 This [Python 3 script](https://github.com/altomator/Introduction_to_Deep_Learning-2-Object_Detection/blob/main/binder/object-detection-with-yolo.py) uses a YOLO v4 model that can be easily downloaded from the [web](https://github.com/AlexeyAB/darknet). The images of a Gallica document are first loaded thanks to the IIIF protocol. The detection then occurs and annotated images are generated, as well as the CSV data. 
@@ -27,10 +31,9 @@ This [Python 3 script](https://github.com/altomator/Introduction_to_Deep_Learnin
 <sup>[ark:/12148/bpt6k46000341](https://gallica.bnf.fr/ark:/12148/bpt6k46000341/f1.item)</sup>
 
 
+#### Google Cloud Vision, IBM Watson Visual Recognition, Clarifai...
 
-### Google Cloud Vision, IBM Watson Visual Recognition
-
-These APIs may be used to perform objects detection. They are trained on huge datasets of thousands of object classes and may be useful for XXth century heritage content. These datasets are primarily aimed at photography, but the generalizability of artificial neural networks means that they can produce acceptable results for drawings and prints. 
+These APIs may be used to perform objects detection. They are trained on huge datasets of thousands of object classes (like ImageNet) and may be useful for XXth century heritage content. These datasets are primarily aimed at photography, but the generalizability of artificial neural networks means that they can produce acceptable results for drawings and prints. 
 
 
 The Perl script described [here](https://github.com/altomator/Image_Retrieval) calls the Google or IBM APIs. 
@@ -60,20 +63,27 @@ The API endpoint is simply called with a curl command sending  the request to th
 		], ...
 ```
 
-*Cost, difficulties:*  Analyzing an image with such APIs costs a fraction of a cent per image.
+**Cost, difficulties:**  Analyzing an image with such APIs costs a fraction of a cent per image.
 Processing can be done entirely using the web platform or with a minimal coding load.
 
 
-### Other approaches
+### Customized solutions
 
 #### Transfert learning
+Out-of-the box solutions use pretrained models. *Transfert learning* means to cut-off the last classification layer of these models and transfert the "model's knowledge" to a local problem, i.e. the set of images and objects one needs to work with.
+
+*Transfer learning and domain adaptation refer to the situation where what has been learned in one setting … is exploited to improve generalization in another setting.* (*Deep Learning*, Ian Goodfellow and al., 2016)
 
 Google Cloud Vision, IBM Watson Cloud Vision and other commercial framework can be used for training a specific object detector on custom data. Training can be done on the web platform (e.g. AutoML Vision) or using APIs. The trained models can then be deployed in the cloud or locally.
 
 Same is true for YOLO, using a commercial web app like [Roboflow](https://blog.roboflow.com/training-yolov4-on-a-custom-dataset/) or [local code](https://towardsdatascience.com/how-to-train-a-custom-object-detection-model-with-yolo-v5-917e9ce13208). 
 
-*Cost, difficulties:* Training means having annotated images available, which implies some preliminary work. 
+**Cost, difficulties:** Training means having annotated images available, which implies some preliminary work, and some computing power to train the model.
+Depending on the context and the expected performance, tens or hundreds of annotated images may be required.
+
 For commercial products, pricing is higher.  
+
+#### Training from scratch
 
 
 ## Use cases
