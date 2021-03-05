@@ -87,6 +87,8 @@ Depending on the context and the expected performance, tens or hundreds of annot
 For commercial products, pricing is higher.  
 
 #### Training from scratch
+There is almost no reason to start from complete scratch, as the pretreained models  tend to generalize  well to other tasks, and will reduce overfitting then starting from  small dataset of images.
+
 
 
 ## Use cases
