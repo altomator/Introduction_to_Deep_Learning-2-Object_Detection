@@ -19,9 +19,12 @@ Automatic annotation of objects on heritage images has uses in the field of info
 
 This [Python 3 script](https://github.com/altomator/Introduction_to_Deep_Learning-2-Object_Detection/blob/main/binder/object-detection-with-yolo.py) uses a YOLO v4 model that can be easily downloaded from the [web](https://github.com/AlexeyAB/darknet). The images of a Gallica document are first loaded thanks to the IIIF protocol. The detection then occurs and annotated images are generated, as well as the CSV data. 
 
+**Display the Jupyter notebook with [nbviewer](https://nbviewer.jupyter.org/github/altomator/Introduction_to_Deep_Learning-2-Face_Detection/blob/main/binder/faces-detection-with-dnn.ipynb)**
+
 ![Object detection on engraving material](https://github.com/altomator/Introduction_to_Deep_Learning-2-Object_Detection/blob/main/images/excelsior.jpg)
 
 <sup>[ark:/12148/bpt6k46000341](https://gallica.bnf.fr/ark:/12148/bpt6k46000341/f1.item)</sup>
+
 
 
 ### Google Cloud Vision, IBM Watson 
