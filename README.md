@@ -64,7 +64,7 @@ The API endpoint is simply called with a curl command sending  the request to th
 		], ...
 ```
 
-See also with [Recipe](https://github.com/CENL-Network-Group-AI/Recipes/wiki/Images-Classification-Recipe)Jupyter notebook which makes use of IBM Watson API to call a trained model in Watson Studio. 
+See also with [Recipe](https://github.com/CENL-Network-Group-AI/Recipes/wiki/Images-Classification-Recipe) which makes use of IBM Watson API to call a  model previously trained with Watson Studio. 
 
 **Cost, difficulties:**  Analyzing an image with such APIs costs a fraction of a cent per image.
 Processing can be done entirely using the web platform or with a minimal coding load.
@@ -95,7 +95,8 @@ For commercial products, pricing is higher.
   - [GallicaPix](https://github.com/altomator/Image_Retrieval) web app; 
   - [Digitens](https://www.univ-brest.fr/digitens/) project: indexing [wallpaper and textile design patterns](https://gallica.bnf.fr/blog/14032019/murs-de-papier-la-collection-de-papiers-peints-du-18eme-siecle-dans-gallica-historique-1?mode=desktop) from the [The National Archives](https://www.nationalarchives.gov.uk/) and the BnF
   - [Standford University Library: Clustering and Classification on all public images](https://sites.google.com/stanford.edu/sul-ai-studio/clustering-and-classification-on-all-public-images)
-  - 
+  - [Artificial intelligence @ the National Library of Norway](https://fr.slideshare.net/sconul/artificial-intelligence-the-national-library-of-norway-svein-arne-brygfjeld-national-library-of-norway)
+  
 [![Object detection on patterns: lines](https://github.com/altomator/Introduction_to_Deep_Learning-2-Object_Detection/blob/main/images/tna.jpg)](https://gallicapix.bnf.fr/rest?run=findIllustrations-app.xq&locale=fr&action=first&start=1&corpus=PP&classif2=ligne&CS=0.5&operator=and&sourceTarget=&keyword=&module=0.5)
 
 - **Digital Humanities:**
