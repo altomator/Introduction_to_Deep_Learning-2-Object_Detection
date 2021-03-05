@@ -21,8 +21,8 @@ This [Python 3 script](https://github.com/altomator/Introduction_to_Deep_Learnin
 
 **Display the Jupyter notebook with [nbviewer](https://nbviewer.jupyter.org/github/altomator/Introduction_to_Deep_Learning-2-Face_Detection/blob/main/binder/faces-detection-with-dnn.ipynb)**
 
-Launch the notebook with Binder:
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/altomator/Introduction_to_Deep_Learning-2-Object_Detection/c52d2bb24290811a95a9aee9f042a515eec03216)
+**Launch the notebook with Binder:
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/altomator/Introduction_to_Deep_Learning-2-Object_Detection/c52d2bb24290811a95a9aee9f042a515eec03216)**
 
 ![Object detection on engraving material](https://github.com/altomator/Introduction_to_Deep_Learning-2-Object_Detection/blob/main/images/excelsior.jpg)
 
