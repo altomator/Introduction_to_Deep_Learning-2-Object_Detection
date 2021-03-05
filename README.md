@@ -64,6 +64,8 @@ The API endpoint is simply called with a curl command sending  the request to th
 		], ...
 ```
 
+See also with [Recipe](https://github.com/CENL-Network-Group-AI/Recipes/wiki/Images-Classification-Recipe)Jupyter notebook which makes use of IBM Watson API to call a trained model in Watson Studio. 
+
 **Cost, difficulties:**  Analyzing an image with such APIs costs a fraction of a cent per image.
 Processing can be done entirely using the web platform or with a minimal coding load.
 
