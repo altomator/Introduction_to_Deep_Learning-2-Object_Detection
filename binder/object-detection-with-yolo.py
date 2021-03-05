@@ -22,7 +22,7 @@ docID = '12148/bpt6k46000341' # quotidien
 
 # IIIF export factor (%)
 doc_export_factor = 10
-# get docMax images
+# get docMax first images from the document
 doc_max = 2
 # data export
 output = "OUT_csv"
@@ -46,7 +46,7 @@ if not os.path.isdir(output_dir):
 
 print (f"\n... CSV files will be saved to {output}")
 
-########## CSV output #############
+########## Images output #############
 output_img_dir = os.path.realpath(output_img)
 if not os.path.isdir(output_img_dir):
 	print(f"\n  Creating img directory {output_img}...")
@@ -55,9 +55,8 @@ if not os.path.isdir(output_img_dir):
 print (f"\n... images files will be saved to {output_img}\n")
 
 
-
 #########################
-# 1. we build the IIIF URL
+# 1. we build the IIIF manifest URL et call the API
 import requests
 
 METADATA_BASEURL = 'https://gallica.bnf.fr/iiif/ark:/'
@@ -72,7 +71,6 @@ print (json_4img.keys())
 ##################
 # 2. Now we load the images files thanks to the IIIF Image protocol
 from iiif_api import IIIF #  get the image files with the IIIF Image API (PyGallica package again)
-
 
 # get the sequence of images metadata. It's a list
 sequences = json_4img.get('sequences')
@@ -149,9 +147,14 @@ def display_images(
 # first we read the images on disk
 image_paths = fnmatch.filter(os.listdir(docID), '*.jpg')
 
+#images = [path_to_pil(e) for e in image_paths]
+#display_images(images)
+#for im in images:
+#   display(im)
+
+
 #########################
-# 3. Now we process the images for objects detection
-# using a yolo model
+# 3. Now we process the images for objects detection using a yolo model
 import numpy as np
 from imutils import paths
 
@@ -272,87 +275,6 @@ def process_image(image,file_ID):
 		else:
 			print ("\tno detection")
 
-def process_image_old(im):
-
-	global n_objects # total number of detected faces
-	n_faces_im = 0 #  number of detected faces
-
-	# load the input image and construct an input blob for the image
-	# by resizing to a fixed 300x300 pixels and then normalizing it
-	file_name=im.filename
-	image = cv2.imread(file_name)
-	(h, w) = image.shape[:2]
-	areaImg = h * w
-	blob = cv2.dnn.blobFromImage(cv2.resize(image, (300, 300)), 1.0,(300, 300), (104.0, 177.0, 123.0))
-	outText=""
-	print ("\n**************\n",file_name)
-	docID = file_name[0:-4]
-	# pass the blob through the network and obtain the detections and predictions
-	net.setInput(blob)
-	detections = net.forward()
-	# loop over the detections
-	for i in range(0, detections.shape[2]):
-			# extract the confidence (i.e., probability) associated with the prediction
-			confidence = detections[0, 0, i, 2]
-			# filter out weak detections by ensuring the `confidence` is greater than the minimum confidence
-			if (confidence > min_confidence):
-				# compute the (x, y)-coordinates of the bounding box for the object
-				box = detections[0, 0, i, 3:7] * np.array([w, h, w, h])
-				(startX, startY, endX, endY) = box.astype("int")
-				wBox = endX-startX
-				hBox = endY-startY
-				if ((endX > w) or (endY > h)):
-					print (f" # out of image : {w} {h} #")
-				elif homothetic((0,0,w,h),(startX, startY, wBox, hBox), areaImg, wBox*hBox):
-					print (f" # homothetic : {w} {h} #")
-				else:
-					n_faces += 1
-					text = "{:.2f}%".format(confidence * 100)
-					#print "\t%s" % text
-					#print (startX, startY,(endX-startX),(endY-startY))
-					# draw the boxes
-					if not(eval_flag):
-						cv2.rectangle(image, (startX, startY), (endX, endY),(0, 0, 255), 1)
-						cv2.putText(image, file_name, (startX, startY),cv2.FONT_HERSHEY_SIMPLEX, 0.4, (0, 0, 00), 1)
-						cv2.putText(image, text, (startX, startY+30),cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 200),2)
-					# build the csv data: x,y,w,h
-					if (outText == ""):
-						# for evaluation, we only consider the case of one face per image
-						if eval_flag:
-							if file_name in gt.keys():
-								print (" -> we have a GT")
-								gt_crop = gt[file_name]
-								evals.append(Detection(file_name,gt_crop,[startX, startY, endX, endY]))
-							else:
-								print (f" -> {file_name} has no GT")
-						outText = "%d,%d,%d,%d,%.2f" % (startX, startY,(endX-startX), (endY-startY), confidence)
-					else: # appending multiple detections
-						outText = "%s %d,%d,%d,%d,%.2f" % (outText, startX, startY,(endX-startX), (endY-startY),confidence)
-
-    # convert from openCV2 to PIL. Notice the COLOR_BGR2RGB which means that
-	# the color is converted from BGR to RGB
-	#color_coverted = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-	#pil_image=Image.fromarray(color_coverted)
-
-	if outText != "":
-		print ("->",outText)
-        # write in file
-		print ("%s\t%s" % (file_name,outText), file=out_file)
-	else:
-		print (" --> no detection!")
-		if eval_flag:
-			if file_name in gt.keys():
-				print (" ... but we have a GT!")
-				gt_crop = gt[file_name]
-				evals.append(Detection(file_name,gt_crop,[0,0,0,0]))
-
-	# show the output image
-	if not(eval_flag):
-		cv2.imshow("Output", image)
-		cv2.waitKey(0)
-	#cv2.imshow("Output", image)
-	#cv2.waitKey(0)
-
 
 #########################
 ##        Main         ##
@@ -383,6 +305,7 @@ for i in image_paths:
 
 print (f"\n ### objects detected: {nb_objects} ###")
 print (f" ### images analysed: {len(image_paths)} ###")
+print (f" ### annotated images exported in {output_img} ###")
 print ("---------------------------")
 
 #########################
