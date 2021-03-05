@@ -5,11 +5,9 @@ Use case: object detection on heritage images
 
 ## Goals 
 
-Automatic annotation of objects on heritage images has uses in the field of information retrieval and digital humanities (quantitative analysis). 
+Automatic annotation of objects on heritage images has uses in the field of information retrieval and digital humanities. Depending on the scenarios considered, this may involve obtaining a new source of textual metadata ("this image contains a *cat*, a *child* and a *sofa*") or locating the detected objects within the image (in this image, there is a *car* at position *x,y,w,h*).  
 
 ![Object detection on engraving material](https://github.com/altomator/Introduction_to_Deep_Learning-2-Object_Detection/blob/main/images/objet.JPG)
-
-<sup>[ark:/12148/bpt6k65413493](https://gallica.bnf.fr/ark:/12148/bpt6k65413493/f964.item)</sup>
 
 
 ## Hands-on session 
@@ -30,9 +28,12 @@ This [Python 3 script](https://github.com/altomator/Introduction_to_Deep_Learnin
 
 
 
-### Google Cloud Vision, IBM Watson 
+### Google Cloud Vision, IBM Watson Visual Recognition
 
-These APIs may be used to perform objects detection. The Perl script described [here](https://github.com/altomator/Image_Retrieval) calls the APIs. 
+These APIs may be used to perform objects detection. They are trained on huge datasets of thousands of object classes and may be useful for XXth century heritage content. These datasets are primarily aimed at photography, but the generalizability of artificial neural networks means that they can produce acceptable results for drawings and prints. 
+
+
+The Perl script described [here](https://github.com/altomator/Image_Retrieval) calls the Google or IBM APIs. 
 
 ```
 > perl toolbox.pl -CC datafile -google
@@ -59,12 +60,20 @@ The API endpoint is simply called with a curl command sending  the request to th
 		], ...
 ```
 
+*Cost, difficulties:*  Analyzing an image with such APIs costs a fraction of a cent per image.
+Processing can be done entirely using the web platform or with a minimal coding load.
+
 
 ### Other approaches
 
-Google Cloud Vision, IBM Watson Cloud Vision and other commercial framework can be used for training a specific object detector on custom data. 
+#### Transfert learning
+
+Google Cloud Vision, IBM Watson Cloud Vision and other commercial framework can be used for training a specific object detector on custom data. Training can be done on the web platform (e.g. AutoML Vision) or using APIs. The trained models can then be deployed in the cloud or locally.
 
 Same is true for YOLO, using a commercial web app like [Roboflow](https://blog.roboflow.com/training-yolov4-on-a-custom-dataset/) or [local code](https://towardsdatascience.com/how-to-train-a-custom-object-detection-model-with-yolo-v5-917e9ce13208). 
+
+*Cost, difficulties:* Training means having annotated images available, which implies some preliminary work. 
+For commercial products, pricing is higher.  
 
 
 ## Use cases
@@ -72,7 +81,8 @@ Same is true for YOLO, using a commercial web app like [Roboflow](https://blog.r
 - **Information Retrieval:** 
   - [GallicaPix](https://github.com/altomator/Image_Retrieval) web app; 
   - [Digitens](https://www.univ-brest.fr/digitens/) project: indexing [wallpaper and textile design patterns](https://gallica.bnf.fr/blog/14032019/murs-de-papier-la-collection-de-papiers-peints-du-18eme-siecle-dans-gallica-historique-1?mode=desktop) from the [The National Archives](https://www.nationalarchives.gov.uk/) and the BnF
-
+  - [Standford University Library: Clustering and Classification on all public images](https://sites.google.com/stanford.edu/sul-ai-studio/clustering-and-classification-on-all-public-images)
+  - 
 [![Object detection on patterns: lines](https://github.com/altomator/Introduction_to_Deep_Learning-2-Object_Detection/blob/main/images/tna.jpg)](https://gallicapix.bnf.fr/rest?run=findIllustrations-app.xq&locale=fr&action=first&start=1&corpus=PP&classif2=ligne&CS=0.5&operator=and&sourceTarget=&keyword=&module=0.5)
 
 - **Digital Humanities:**
@@ -83,7 +93,6 @@ Same is true for YOLO, using a commercial web app like [Roboflow](https://blog.r
 [![Object detection on newspapers illustrations](https://github.com/altomator/Introduction_to_Deep_Learning-2-Object_Detection/blob/main/images/numapress.jpg)](http://www.numapresse.org/exploration/cinema_pages/query_illustration.php)
 
   - Telecom Paris-Tech, Nicolas Gonthier: [Weakly Supervised Object Detection in Artworks](https://wsoda.telecom-paristech.fr/)
-
 
 
 ## Resources
