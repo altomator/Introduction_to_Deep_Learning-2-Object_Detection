@@ -10,6 +10,7 @@ Automatic annotation of objects on heritage images has uses in the field of info
 These goals can be satisfy with "out-of-the-box" services or customized solutions. 
 
 ![Object detection on engraving material](https://github.com/altomator/Introduction_to_Deep_Learning-2-Object_Detection/blob/main/images/objet.JPG)
+
 <sup>*Vogue magazine*, French edition, 1922</sup>
 
 ## Hands-on session 
