@@ -43,6 +43,8 @@ The Perl script described [here](https://github.com/altomator/Image_Retrieval) c
 > perl toolbox.pl -CC datafile -google
 ```
 
+_Note:_ IBM Watson Visual Recognition is discontinued. Existing instances are supported until 1 December 2021.
+
 The API endpoint is simply called with a curl command sending  the request to the API as a JSON fragment including the image data and the features expected to be returned:
 
 ```
