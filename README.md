@@ -38,7 +38,7 @@ This [Python 3 script](https://github.com/altomator/Introduction_to_Deep_Learnin
 These APIs may be used to perform objects detection. They are trained on huge datasets of thousands of object classes (like ImageNet) and may be useful for XXth century heritage content. These datasets are primarily aimed at photography, but the generalizability of artificial neural networks means that they can produce acceptable results for drawings and prints. 
 
 
-The Perl script described [here](https://github.com/altomator/Image_Retrieval) calls the Google or IBM APIs. 
+![Hands-on](https://github.com/altomator/Introduction_to_Deep_Learning-2-Object_Detection/blob/main/images/hands-on.png) The Perl script described [here](https://github.com/altomator/Image_Retrieval) calls the Google or IBM APIs. 
 
 ```
 > perl toolbox.pl -CC datafile -google
