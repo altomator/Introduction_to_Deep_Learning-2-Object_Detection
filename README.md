@@ -84,7 +84,7 @@ Google Cloud Vision and other commercial framework can be used for training a sp
 
 Same is true for YOLO, using a commercial web app like [Roboflow](https://blog.roboflow.com/training-yolov4-on-a-custom-dataset/) or [local code](https://towardsdatascience.com/how-to-train-a-custom-object-detection-model-with-yolo-v5-917e9ce13208). 
 
-![Hands-on](https://github.com/altomator/Introduction_to_Deep_Learning-2-Object_Detection/blob/main/images/hands-on.png) Open source AI platforms all offers  APIs to apply transfert learning. This Google Colab [Jupyter script](https://modoap.huma-num.fr/outils-realises/) uses tf.keras (the high level API of TensorFlow) to train a classification model. Training images must be stored on a Google drive.
+![Hands-on](https://github.com/altomator/Introduction_to_Deep_Learning-2-Object_Detection/blob/main/images/hands-on.png) Open source AI platforms all offers  APIs to apply transfert learning. This Google Colab [Jupyter script](https://modoap.huma-num.fr/outils-realises/) from the MODOAP project uses tf.keras (the high level API of TensorFlow) to train a classification model. Training images must be stored on a Google drive.
 
 
 
