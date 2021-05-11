@@ -22,7 +22,8 @@ These goals can be satisfy with "out-of-the-box" services or customized solution
 
 This [Python 3 script](https://github.com/altomator/Introduction_to_Deep_Learning-2-Object_Detection/blob/main/binder/object-detection-with-yolo.py) uses a YOLO v4 model that can be easily downloaded from the [web](https://github.com/AlexeyAB/darknet). The images of a Gallica document are first loaded thanks to the IIIF protocol. The detection then occurs and annotated images are generated, as well as the CSV data. 
 
-**Display the Jupyter notebook with [nbviewer](https://nbviewer.jupyter.org/github/altomator/Introduction_to_Deep_Learning-2-Object_Detection/blob/main/binder/object-detection-with-dnn.ipynb)**
+**Display the Jupyter notebook with [nbviewer](https://nbviewer.jupyter.org/github/altomator/Introduction_to_Deep_Learning-2-Object_Detection/blob/main/binder/object-detection-with-yolo.ipynb)**
+
 
 **Launch the notebook with Binder:
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/altomator/Introduction_to_Deep_Learning-2-Object_Detection/c52d2bb24290811a95a9aee9f042a515eec03216)**
