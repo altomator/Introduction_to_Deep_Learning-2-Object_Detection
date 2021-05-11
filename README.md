@@ -118,5 +118,8 @@ There is almost no reason to start from complete scratch, as the pretreained mod
 
 ## Resources
 - [Object Detection in a Nutshell](https://goraft.tech/2020/05/01/object-detection-in-a-nutshell.html)
+- Object annotation tools:
+  - [VGG Image Annotator](https://www.robots.ox.ac.uk/~vgg/software/via/) 
+  - [CVAT](https://github.com/openvinotoolkit/cvat)
 
 
