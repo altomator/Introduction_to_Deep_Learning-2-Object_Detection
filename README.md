@@ -20,7 +20,7 @@ These goals can be satisfy with "out-of-the-box" services or customized solution
 #### YOLO
 [YOLO](https://pjreddie.com/darknet/yolo/) performs object detection on a 80 classes model. YOLO is well known to be fast and accurate.
 
-This [Python 3 script](https://github.com/altomator/Introduction_to_Deep_Learning-2-Object_Detection/blob/main/binder/object-detection-with-yolo.py) uses a YOLO v4 model that can be easily downloaded from the [web](https://github.com/AlexeyAB/darknet). The images of a Gallica document are first loaded thanks to the IIIF protocol. The detection then occurs and annotated images are generated, as well as the CSV data. 
+![Hands-on](https://github.com/altomator/Introduction_to_Deep_Learning-2-Object_Detection/blob/main/images/hands-on.png) This [Python 3 script](https://github.com/altomator/Introduction_to_Deep_Learning-2-Object_Detection/blob/main/binder/object-detection-with-yolo.py) uses a YOLO v4 model that can be easily downloaded from the [web](https://github.com/AlexeyAB/darknet). The images of a Gallica document are first loaded thanks to the IIIF protocol. The detection then occurs and annotated images are generated, as well as the CSV data. 
 
 **Display the Jupyter notebook with [nbviewer](https://nbviewer.jupyter.org/github/altomator/Introduction_to_Deep_Learning-2-Object_Detection/blob/main/binder/object-detection-with-yolo.ipynb)**
 
@@ -67,7 +67,7 @@ The API endpoint is simply called with a curl command sending  the request to th
 		], ...
 ```
 
-See also with [Recipe](https://github.com/CENL-Network-Group-AI/Recipes/wiki/Images-Classification-Recipe) which makes use of IBM Watson API to call a  model previously trained with Watson Studio. 
+![Hands-on](https://github.com/altomator/Introduction_to_Deep_Learning-2-Object_Detection/blob/main/images/hands-on.png) See also with [Recipe](https://github.com/CENL-Network-Group-AI/Recipes/wiki/Images-Classification-Recipe) which makes use of IBM Watson API to call a  model previously trained with Watson Studio. 
 
 **Cost, difficulties:**  Analyzing an image with such APIs costs a fraction of a cent per image.
 Processing can be done entirely using the web platform or with a minimal coding load.
@@ -84,7 +84,7 @@ Google Cloud Vision and other commercial framework can be used for training a sp
 
 Same is true for YOLO, using a commercial web app like [Roboflow](https://blog.roboflow.com/training-yolov4-on-a-custom-dataset/) or [local code](https://towardsdatascience.com/how-to-train-a-custom-object-detection-model-with-yolo-v5-917e9ce13208). 
 
-Open source AI platforms all offers  APIs to apply transfert learning. This Google Colab [Jupyter script](https://modoap.huma-num.fr/outils-realises/) uses tf.keras (the high level API of TensorFlow) to train a classification model. Training images must be stored on a Google drive.
+![Hands-on](https://github.com/altomator/Introduction_to_Deep_Learning-2-Object_Detection/blob/main/images/hands-on.png) Open source AI platforms all offers  APIs to apply transfert learning. This Google Colab [Jupyter script](https://modoap.huma-num.fr/outils-realises/) uses tf.keras (the high level API of TensorFlow) to train a classification model. Training images must be stored on a Google drive.
 
 
 
