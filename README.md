@@ -80,14 +80,16 @@ Out-of-the box solutions use pretrained models. *Transfert learning* means to cu
 
 *Transfer learning and domain adaptation refer to the situation where what has been learned in one setting … is exploited to improve generalization in another setting.* (*Deep Learning*, Ian Goodfellow and al., 2016)
 
-Google Cloud Vision, IBM Watson Cloud Vision and other commercial framework can be used for training a specific object detector on custom data. Training can be done on the web platform (e.g. AutoML Vision) or using APIs. The trained models can then be deployed in the cloud or locally.
+Google Cloud Vision and other commercial framework can be used for training a specific object detector on custom data. Training can be done on the web platform (e.g. AutoML Vision) or using APIs. The trained models can then be deployed in the cloud or locally.
 
 Same is true for YOLO, using a commercial web app like [Roboflow](https://blog.roboflow.com/training-yolov4-on-a-custom-dataset/) or [local code](https://towardsdatascience.com/how-to-train-a-custom-object-detection-model-with-yolo-v5-917e9ce13208). 
 
-**Cost, difficulties:** Training means having annotated images available, which implies some preliminary work, and some computing power to train the model.
-Depending on the context and the expected performance, tens or hundreds of annotated images may be required.
+Open source AI platforms all offers  APIs to apply transfert learning. This Google Colab [Jupyter script](https://modoap.huma-num.fr/outils-realises/) uses tf.keras (the high level API of TensorFlow) to train a classification model. Training images must be stored on a Google drive.
 
-For commercial products, pricing is higher.  
+
+
+**Cost, difficulties:** Training means having annotated images available, which implies some preliminary work, and some computing power to train the model.
+Depending on the context and the expected performance, tens or hundreds of annotated images may be required. For commercial products, pricing is higher when using a trained model.  
 
 #### Training from scratch
 There is almost no reason to start from complete scratch, as the pretreained models  tend to generalize  well to other tasks, and will reduce overfitting then starting from  small dataset of images.
